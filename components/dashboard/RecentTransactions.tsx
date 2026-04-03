@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { transactions } from '@/lib/data';
 import { glassCard } from '@/lib/styles';
@@ -50,12 +51,16 @@ export default function RecentTransactions() {
       
       <div ref={containerRef} className="flex flex-col gap-0 overflow-y-auto flex-1 min-h-0 hide-scroll scroll-smooth"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        {transactions.slice(0, 8).map((tx, idx) => (
+        {transactions.slice(0, 6).map((tx, idx) => (
           <div key={idx} className="flex items-center gap-3 border-b border-white/5 last:border-0 flex-shrink-0 group"
             style={{ height: `${100 / itemCount}%` }}>
-            <div className="w-[38px] h-[38px] rounded-xl flex items-center justify-center flex-shrink-0 font-bold"
-              style={{ background: tx.iconBg || 'rgba(255,255,255,0.15)', color: tx.iconColor || '#fff' }}>
-              {tx.icon}
+            <div className="relative w-[38px] h-[38px] bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 font-bold overflow-hidden"
+              style={{ color: tx.iconColor || '#fff' }}>
+              {tx.icon.startsWith('/') ? (
+                <Image src={tx.icon} alt={tx.name} fill className="object-contain p-2" />
+              ) : (
+                tx.icon
+              )}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-white text-[13.5px] font-medium truncate leading-tight mb-1">{tx.name}</p>
