@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import { Zap, Search, Bell, Clock, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/dashboard/Sidebar';
 import TotalBalanceCard from '@/components/dashboard/TotalBalanceCard';
@@ -7,6 +8,7 @@ import FinancialGoals from '@/components/dashboard/FinancialGoals';
 import AllActivity from '@/components/dashboard/AllActivity';
 import YourCard from '@/components/dashboard/YourCard';
 import RecentTransactions from '@/components/dashboard/RecentTransactions';
+import ActivityContent from '@/components/activity/ActivityContent';
 
 function ContentArea() {
   return (
@@ -60,6 +62,8 @@ function ContentArea() {
 }
 
 export default function DashboardLayout() {
+  const [activeTab, setActiveTab] = useState('Overview');
+
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden pt-3 sm:pt-4 px-3 sm:px-6" style={{ background: '#0D0B14' }}>
 
@@ -97,8 +101,9 @@ export default function DashboardLayout() {
           >
             {['Overview','Activity','Manage','Card','Account'].map(tab => (
               <button key={tab}
+                onClick={() => setActiveTab(tab)}
                 className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                  ${tab === 'Overview'
+                  ${activeTab === tab
                     ? 'bg-white text-[#0D0B14]'
                     : 'text-[#8B899A] hover:text-white'
                   }`}>
@@ -141,7 +146,7 @@ export default function DashboardLayout() {
           style={{ maxWidth: '1440px' }}
         >
           <Sidebar />
-          <ContentArea />
+          {activeTab === 'Activity' ? <ActivityContent /> : <ContentArea />}
         </div>
       </div>
 

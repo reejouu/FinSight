@@ -32,11 +32,11 @@ export default function YourCard() {
   // Shared inner content for identical structure
   const CardContent = ({ number, opacity, type }: { number: string, opacity: string, type: string }) => (
     <div className="absolute inset-0 p-4 flex flex-col justify-between w-full h-full">
-      {/* Decorative Waves Overlay */}
+      {/* Decorative Waves Overlay - Kept subtle */}
       <svg className={`absolute inset-0 w-full h-full pointer-events-none ${opacity}`} preserveAspectRatio="none" viewBox="0 0 300 200">
-        <path d="M0,50 Q60,10 120,60 T240,60 T300,40 L300,200 L0,200 Z" fill="none" stroke="white" strokeWidth="1.5" />
-        <path d="M-50,100 Q40,60 100,110 T220,110 T350,90 L350,200 L-50,200 Z" fill="none" stroke="white" strokeWidth="1" />
-        <path d="M0,150 Q80,110 140,160 T260,160 T300,140" fill="none" stroke="white" strokeWidth="1.5" />
+        <path d="M0,50 Q60,10 120,60 T240,60 T300,40 L300,200 L0,200 Z" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
+        <path d="M-50,100 Q40,60 100,110 T220,110 T350,90 L350,200 L-50,200 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+        <path d="M0,150 Q80,110 140,160 T260,160 T300,140" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
       </svg>
 
       {/* 3D Glass & Lighting Overlays */}
@@ -90,9 +90,8 @@ export default function YourCard() {
 
       {/* Cards Stack */}
       <div 
-        className="relative h-[160px] mb-5 w-full flex-shrink-0 cursor-pointer flex items-center"
+        className="relative h-[160px] mb-5 w-full flex-shrink-0 flex items-center"
         style={{ perspective: '800px' }}
-        onClick={() => handleSwap(1)}
         onWheel={handleWheel}
       >
         <div 

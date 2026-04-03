@@ -50,18 +50,21 @@ export default function RecentTransactions() {
       
       <div ref={containerRef} className="flex flex-col gap-0 overflow-y-auto flex-1 min-h-0 hide-scroll scroll-smooth"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        {transactions.map((tx, idx) => (
+        {transactions.slice(0, 8).map((tx, idx) => (
           <div key={idx} className="flex items-center gap-3 border-b border-white/5 last:border-0 flex-shrink-0 group"
             style={{ height: `${100 / itemCount}%` }}>
-            <div className="w-[38px] h-[38px] rounded-xl flex items-center justify-center flex-shrink-0 bg-white/[0.15] group-hover:bg-white/[0.25] transition-colors">
-              <img src={tx.image} alt={tx.name} className="w-5 h-5 object-contain" />
+            <div className="w-[38px] h-[38px] rounded-xl flex items-center justify-center flex-shrink-0 font-bold"
+              style={{ background: tx.iconBg || 'rgba(255,255,255,0.15)', color: tx.iconColor || '#fff' }}>
+              {tx.icon}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-white text-[13.5px] font-medium truncate leading-tight mb-1">{tx.name}</p>
               <p className="text-[#8B899A] text-[11px] leading-none">{tx.time}</p>
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-white text-[13.5px] font-semibold leading-tight mb-1">{tx.amount}</p>
+              <p className="text-white text-[13.5px] font-semibold leading-tight mb-1">
+                {tx.type === 'Income' ? '+' : '-'}${tx.amount.toFixed(0)}
+              </p>
               <p className="text-[#8B899A] text-[11px] leading-none">{tx.type}</p>
             </div>
           </div>
