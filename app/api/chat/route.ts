@@ -13,9 +13,10 @@ Use natural sentences, avoid bullet lists. Be specific and actionable.
 Budgets: ${JSON.stringify(budgets)}
 Transactions: ${JSON.stringify(transactions)}`;
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
 
-    if (!apiKey) {
+    if (!anthropicKey && !geminiKey) {
       // Simulate streaming response for local testing when no key is set
       const stream = new ReadableStream({
         async start(controller) {
@@ -56,12 +57,58 @@ Transactions: ${JSON.stringify(transactions)}`;
       return new Response(stream, { headers: { 'Content-Type': 'text/plain' } });
     }
 
-    // Call actual Anthropic API
+    // Option 1: Call actual Google Gemini API
+    if (geminiKey) {
+      const geminiMessages = messages.map((m: any) => ({
+        role: m.role === 'user' ? 'user' : 'model',
+        parts: [{ text: m.content }]
+      }));
+      geminiMessages.unshift({ role: 'user', parts: [{ text: systemPrompt }] });
+      geminiMessages.unshift({ role: 'model', parts: [{ text: "Understood." }] });
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?key=${geminiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: geminiMessages })
+      });
+
+      if (!response.ok) throw new Error('Gemini API error');
+
+      const stream = new ReadableStream({
+        async start(controller) {
+          const reader = response.body?.getReader();
+          const decoder = new TextDecoder();
+          if (!reader) return controller.close();
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            
+            // Gemini streams a JSON array where each chunk has a text piece inside `candidates[0].content.parts[0].text`
+            const chunk = decoder.decode(value, { stream: true });
+            
+            // basic regex parsing for raw stream since SSE format differs per API provider
+            const textMatches = chunk.match(/"text":\s*"([^"]+)"/g) || [];
+            
+            for (let match of textMatches) {
+               try {
+                   const rawText = match.replace(/"text":\s*"/, '').replace(/"$/, '');
+                   controller.enqueue(new TextEncoder().encode(rawText.replace(/\\n/g, '\n').replace(/\\"/g, '"')));
+               } catch (e) {}
+            }
+          }
+          controller.close();
+        }
+      });
+      return new Response(stream, { headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // Option 2: Call actual Anthropic API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
+        'x-api-key': anthropicKey as string,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({

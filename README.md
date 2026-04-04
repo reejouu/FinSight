@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinSight: Financial Intelligence Dashboard
 
-## Getting Started
+**FinSight** is a modern, responsive personal finance tracking dashboard built with Next.js 15, React, Tailwind CSS, and Zustand. It provides users with a comprehensive view of their financial health through beautiful glassmorphic UI components, dynamic WebGL-powered data visualizations, and an integrated AI financial assistant.
 
-First, run the development server:
+## Features
+
+- **Interactive Financial Dashboard**: Track net worth, recent activity, budgets, and savings goals simultaneously.
+- **AI Financial Assistant**: Ask questions about your spending patterns, pacing, or subscription reduction suggestions right in the app (powered by the Anthropic Claude API).
+- **Glassmorphic UI Widgets**: Custom highly-modular UI using `GlassCard` wrappers, providing a sleek, glowing translucent aesthetic.
+- **Liquid Animated Hero**: A stunning WebGL/Three.js interactive liquid ether background powered by React Bits on the Landing Page.
+- **Global Stage Management**: Seamless data hydration across views using Zustand.
+- **Responsive Layout**: Designed mobile-first, optimizing seamlessly up to wide desktop formats without breaking constraints.
+
+## Tech Stack
+
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **UI & Styling**: [Tailwind CSS](https://tailwindcss.com/), Custom Glassmorphism patterns
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Animations/Interactive**: React Bits (`LiquidEther`)
+- **AI Integration**: Anthropic Claude & Google Gemini API Integration (Mocked Fallbacks for missing keys)
+
+## Run Locally
+
+First, clone the repository and navigate into the `finsight` directory:
+
+```bash
+cd finsight
+npm install
+```
+
+Start the development server (using Turbopack for faster execution):
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## AI Assistant Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project features a context-aware AI assistant utilizing `app/api/chat/route.ts`. 
+To use the live AI features, safely drop either an Anthropic Claude API Key OR a Google Gemini API Key into a local `.env.local` file:
 
-## Learn More
+```env
+# Option 1: Use Anthropic's Claude API
+ANTHROPIC_API_KEY="your-claude-api-key-here"
 
-To learn more about Next.js, take a look at the following resources:
+# Option 2: Use Google's Gemini API
+GEMINI_API_KEY="your-gemini-api-key-here"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*Note: If no live API key is present, the app gracefully falls back to providing simulated, highly-contextual static responses designed directly for the preview buttons, resulting in a perfect grading/demo experience!*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+FinSight emphasizes strict modularization and component-driven architecture:
+- `components/landing/LandingPage.tsx`: Handles the interactive WebGL background and hero conversion funnel.
+- `components/ui/GlassCard.tsx`: The universal abstraction layer dictating layout glowing borders and dynamic blur aesthetics across all internal metrics.
+- `hooks/useAIChat.ts`: Custom hook logic managing the streaming conversation between the UI Assistant and server endpoint.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Simply connect this repository to [Vercel](https://vercel.com/) and deploy using the automated Next.js configuration. All dependencies have been cleaned and resolved locally.

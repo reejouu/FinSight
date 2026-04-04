@@ -1,7 +1,7 @@
 import React from 'react';
 import LiquidEther from '@/components/ui/LiquidEther';
 import Navbar from '@/components/shared/Navbar';
-import BorderGlow from '@/components/BorderGlow';
+import BorderGlow from '@/components/ui/BorderGlow';
 
 export default function LandingPage({ onEnter, onTabSelect }: { onEnter: () => void, onTabSelect: (tab: string) => void }) {
   return (
