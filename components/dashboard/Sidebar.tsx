@@ -1,9 +1,10 @@
 import React from 'react';
-import { Zap, LayoutGrid, BarChart2, ArrowLeftRight, Receipt, Users, LogOut } from 'lucide-react';
+import { Zap, LayoutGrid, BarChart2, ArrowLeftRight, Receipt, Users, LogOut, Home, Landmark } from 'lucide-react';
 
-const NAV_ICONS = [LayoutGrid, BarChart2, ArrowLeftRight, Receipt, Users];
+const NAV_ICONS = [Home, LayoutGrid, ArrowLeftRight, BarChart2, Landmark];
 
-export default function Sidebar() {
+export default function Sidebar({ activeTab, setActiveTab }: { activeTab?: string, setActiveTab?: (tab: string) => void }) {
+  const tabs = ['Home', 'Overview', 'Activity', 'Insights', 'Accounts'];
   return (
     <aside
       className="flex flex-col items-center flex-shrink-0 py-5 pl-3 pr-2"
@@ -19,14 +20,19 @@ export default function Sidebar() {
           border: '1px solid rgba(255,255,255,0.07)',
         }}
       >
-        {NAV_ICONS.map((Icon, i) => (
+        {NAV_ICONS.map((Icon, i) => {
+          const tabName = tabs[i];
+          const isActive = activeTab === tabName;
+          return (
           <button key={i}
+            onClick={() => setActiveTab && setActiveTab(tabName)}
             className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all flex-shrink-0
-              ${i === 0 ? 'text-[#7C5CFC]' : 'text-[#5A5870] hover:text-white hover:bg-white/5'}`}
-            style={i === 0 ? { background: 'rgba(124,92,252,0.15)' } : {}}>
+              ${isActive ? 'text-[#7C5CFC]' : 'text-[#5A5870] hover:text-white hover:bg-white/5'}`}
+            style={isActive ? { background: 'rgba(124,92,252,0.15)' } : {}}>
             <Icon size={17} />
           </button>
-        ))}
+          );
+        })}
         <div className="flex-1" />
         <button className="w-10 h-10 rounded-xl flex items-center justify-center
           text-[#5A5870] hover:text-white hover:bg-white/5 transition-all flex-shrink-0">

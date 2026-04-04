@@ -3,7 +3,7 @@ import React from 'react';
 import { MoreHorizontal } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { activityData } from '@/lib/data';
-import { glassCard } from '@/lib/styles';
+import GlassCard from '@/components/ui/GlassCard';
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -20,7 +20,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export default function AllActivity() {
   return (
-    <div className="flex flex-col h-full p-5 rounded-2xl min-w-0 flex-1 relative" style={glassCard}>
+    <GlassCard className="flex flex-col h-full p-5 rounded-2xl min-w-0 flex-1 relative">
       <div className="flex justify-between items-center mb-4 flex-shrink-0 z-10 relative">
         <h3 className="text-white text-[15px] font-medium tracking-wide">All Activity</h3>
         <button className="text-[#5A5870] hover:text-white transition-colors"><MoreHorizontal size={18} /></button>
@@ -74,6 +74,6 @@ export default function AllActivity() {
           </div>
         ))}
       </div>
-    </div>
+    </GlassCard>
   );
 }

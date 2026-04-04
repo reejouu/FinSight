@@ -38,10 +38,10 @@ export default function Navbar() {
       {/* User info */}
       <div className="flex items-center gap-2 flex-shrink-0 pl-1">
         <div className="w-8 h-8 rounded-full bg-[#7C5CFC] flex items-center justify-center
-          text-white text-xs font-bold flex-shrink-0">DR</div>
+          text-white text-xs font-bold flex-shrink-0">SA</div>
         <div className="flex flex-col min-w-0">
-          <span className="text-white text-xs font-medium leading-tight whitespace-nowrap">Darlene Robertson</span>
-          <span className="text-[#8B899A] text-[10px] leading-tight whitespace-nowrap">felicia.reid@gmail.com</span>
+          <span className="text-white text-xs font-medium leading-tight whitespace-nowrap">Sayan Adhikary</span>
+          <span className="text-[#8B899A] text-[10px] leading-tight whitespace-nowrap">sayanadhikary2017@gmail.com</span>
         </div>
         <ChevronDown size={14} className="text-[#8B899A] flex-shrink-0" />
       </div>

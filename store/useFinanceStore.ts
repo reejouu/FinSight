@@ -21,6 +21,7 @@ interface Transaction {
 
 interface FinanceStore {
   transactions: Transaction[];
+  budgets: Record<string, number>;
   filters: {
     search: string;
     category: string;
@@ -38,6 +39,7 @@ interface FinanceStore {
   deleteTransaction: (id: string) => void;
   editTransaction: (id: string, updates: Partial<Transaction>) => void;
   setPage: (page: number) => void;
+  setBudget: (category: string, limit: number) => void;
 
   getFilteredTransactions: () => Transaction[];
 }
@@ -46,13 +48,14 @@ export const useFinanceStore = create<FinanceStore>()(
   persist(
     (set: any, get: any) => ({
       transactions: transactions,
+      budgets: { Shopping: 500, Entertainment: 150, Food: 200, Workspace: 300 } as Record<string, number>,
       filters: {
         search: '',
         category: 'all',
         type: 'All' as 'All' | 'Income' | 'Expense',
         month: 'all',
       },
-      role: 'Admin' as 'Viewer' | 'Admin',
+      role: 'Viewer' as 'Viewer' | 'Admin',
       currentPage: 1,
       pageSize: 10,
 
@@ -80,6 +83,10 @@ export const useFinanceStore = create<FinanceStore>()(
           ),
         })),
       setPage: (page: number) => set({ currentPage: page }),
+      setBudget: (category: string, limit: number) =>
+        set((state: FinanceStore) => ({
+          budgets: { ...state.budgets, [category]: limit },
+        })),
 
       getFilteredTransactions: () => {
         const { transactions, filters } = get();
@@ -96,6 +103,6 @@ export const useFinanceStore = create<FinanceStore>()(
         });
       },
     }),
-    { name: 'finsight-store' }
+    { name: "finsight-store-v182" }
   )
 );

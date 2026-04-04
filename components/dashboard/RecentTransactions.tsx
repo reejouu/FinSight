@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { transactions } from '@/lib/data';
-import { glassCard } from '@/lib/styles';
+import GlassCard from '@/components/ui/GlassCard';
 
 export default function RecentTransactions() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export default function RecentTransactions() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-1 p-4 rounded-2xl min-h-0 overflow-hidden" style={glassCard}>
+    <GlassCard className="flex flex-col flex-1 p-4 rounded-2xl min-h-0 overflow-hidden">
       <div className="flex justify-between items-center mb-3 flex-shrink-0">
         <h3 className="font-semibold text-white">Recent Transaction</h3>
         <ChevronRight size={14} className="text-[#8B899A]"/>
@@ -57,7 +57,7 @@ export default function RecentTransactions() {
             <div className="relative w-[38px] h-[38px] bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 font-bold overflow-hidden"
               style={{ color: tx.iconColor || '#fff' }}>
               {tx.icon.startsWith('/') ? (
-                <Image src={tx.icon} alt={tx.name} fill className="object-contain p-2" />
+                <Image src={tx.icon} alt={tx.name} fill className={`object-contain p-2 ${['Netflix', 'Amazon', 'Starbucks'].includes(tx.name) ? 'scale-[1.35]' : ''}`} />
               ) : (
                 tx.icon
               )}
@@ -75,6 +75,6 @@ export default function RecentTransactions() {
           </div>
         ))}
       </div>
-    </div>
+    </GlassCard>
   );
 }

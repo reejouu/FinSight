@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { glassCard } from '@/lib/styles';
+import GlassCard from '@/components/ui/GlassCard';
 import { cardsData } from '@/lib/data';
 
 export default function YourCard() {
@@ -75,7 +75,7 @@ export default function YourCard() {
   const activeCard = cardsData[activeIndex];
 
   return (
-    <div className="flex flex-col flex-shrink-0 rounded-2xl p-4" style={glassCard}>
+    <GlassCard className="flex flex-col flex-shrink-0 rounded-2xl p-4">
       {/* Title & Add button */}
       <div className="flex items-center justify-between mb-3">
         <span className="text-white font-semibold text-base">Your Card</span>
@@ -182,6 +182,6 @@ export default function YourCard() {
           <span className="text-[#8B899A] flex-shrink-0 transition-all duration-300">{activeCard.percent}%</span>
         </div>
       </div>
-    </div>
+    </GlassCard>
   );
 }

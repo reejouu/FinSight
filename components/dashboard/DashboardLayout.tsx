@@ -9,6 +9,9 @@ import AllActivity from '@/components/dashboard/AllActivity';
 import YourCard from '@/components/dashboard/YourCard';
 import RecentTransactions from '@/components/dashboard/RecentTransactions';
 import ActivityContent from '@/components/activity/ActivityContent';
+import InsightsPage from '@/components/insights/InsightsPage';
+import AccountsPage from '@/components/accounts/AccountsPage';
+import Navbar from '@/components/shared/Navbar';
 
 function ContentArea() {
   return (
@@ -61,9 +64,7 @@ function ContentArea() {
   );
 }
 
-export default function DashboardLayout() {
-  const [activeTab, setActiveTab] = useState('Overview');
-
+export default function DashboardLayout({ activeTab, setActiveTab, onGoHome }: { activeTab: string, setActiveTab: (tab: string) => void, onGoHome?: () => void }) {
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden pt-3 sm:pt-4 px-3 sm:px-6" style={{ background: '#0D0B14' }}>
 
@@ -73,80 +74,17 @@ export default function DashboardLayout() {
         style={{ background: 'radial-gradient(ellipse 70% 45% at 55% 0%, rgba(90,50,180,0.22) 0%, transparent 65%)' }}
       />
 
-      {/* ── TOP NAVBAR BAR — full width, own row, frosted ── */}
-      <header
-        className="flex-shrink-0 flex items-center w-full px-6 py-3 z-20 relative"
-        style={{
-          height: '64px',
-        }}
-      >
-        {/* Logo — left-pinned */}
-        <div className="flex items-center gap-2 flex-shrink-0 mr-6">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{ background: '#7C5CFC' }}>
-            <Zap size={15} className="text-white" />
-          </div>
-          <span className="text-white font-semibold text-sm">FinSight</span>
-        </div>
-
-        {/* Tab pill — centered absolutely so it doesn't shift with user info width */}
-        <div className="flex-1 flex justify-center">
-          <div
-            className="flex items-center rounded-full p-1 gap-0.5"
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(12px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-            }}
-          >
-            {['Overview','Activity','Manage','Card','Account'].map(tab => (
-              <button key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                  ${activeTab === tab
-                    ? 'bg-white text-[#0D0B14]'
-                    : 'text-[#8B899A] hover:text-white'
-                  }`}>
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Icons + user — right-pinned */}
-        <div className="flex items-center gap-2 flex-shrink-0 ml-6">
-          {[Search, Bell, Clock].map((Icon, i) => (
-            <button key={i}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[#8B899A] hover:text-white transition-colors flex-shrink-0"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <Icon size={15} />
-            </button>
-          ))}
-          <div className="flex items-center gap-2 pl-2 flex-shrink-0"
-            style={{
-              borderLeft: '1px solid rgba(255,255,255,0.08)',
-              marginLeft: '4px',
-              paddingLeft: '12px',
-            }}>
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-              style={{ background: '#7C5CFC' }}>DR</div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-white text-xs font-medium leading-tight whitespace-nowrap">Darlene Robertson</span>
-              <span className="text-[#8B899A] text-[10px] leading-tight">felicia.reid@gmail.com</span>
-            </div>
-            <ChevronDown size={13} className="text-[#8B899A] flex-shrink-0" />
-          </div>
-        </div>
-      </header>
+      {/* ── TOP NAVBAR BAR ── */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} onGoHome={onGoHome} />
 
       {/* ── BODY BELOW NAVBAR ── */}
       <div className="flex flex-1 overflow-hidden min-h-0 w-full justify-center z-10 relative">
         <div
-          className="flex w-full overflow-hidden min-h-0"
+          className="flex w-full overflow-hidden min-h-0 relative"
           style={{ maxWidth: '1440px' }}
         >
-          <Sidebar />
-          {activeTab === 'Activity' ? <ActivityContent /> : <ContentArea />}
+          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+          {activeTab === 'Activity' ? <ActivityContent /> : activeTab === 'Insights' ? <InsightsPage /> : activeTab === 'Accounts' ? <AccountsPage /> : <ContentArea />}
         </div>
       </div>
 
