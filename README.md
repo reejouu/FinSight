@@ -1,66 +1,78 @@
-# FinSight: Financial Intelligence Dashboard
+# FinSight — Financial Intelligence Dashboard
 
-**FinSight** is a modern, responsive personal finance tracking dashboard built with Next.js 15, React, Tailwind CSS, and Zustand. It provides users with a comprehensive view of their financial health through beautiful glassmorphic UI components, dynamic WebGL-powered data visualizations, and an integrated AI financial assistant.
+**Live Demo:** [fin-sight-eosin.vercel.app](https://fin-sight-eosin.vercel.app)
+
+FinSight is a modern personal finance dashboard built with Next.js 15, Tailwind CSS, and Zustand. It gives users a comprehensive view of their financial health through a glassmorphic UI, dynamic data visualizations, and an integrated AI financial assistant.
 
 ## Features
 
-- **Interactive Financial Dashboard**: Track net worth, recent activity, budgets, and savings goals simultaneously.
-- **AI Financial Assistant**: Ask questions about your spending patterns, pacing, or subscription reduction suggestions right in the app (powered by the Anthropic Claude API).
-- **Glassmorphic UI Widgets**: Custom highly-modular UI using `GlassCard` wrappers, providing a sleek, glowing translucent aesthetic.
-- **Liquid Animated Hero**: A stunning WebGL/Three.js interactive liquid ether background powered by React Bits on the Landing Page.
-- **Global Stage Management**: Seamless data hydration across views using Zustand.
-- **Responsive Layout**: Designed mobile-first, optimizing seamlessly up to wide desktop formats without breaking constraints.
+- **Dashboard Overview** — Track balance, income, expenses, spending trends, and financial goals in one view
+- **Transactions Management** — Full table with search, category/type/date filtering, column sorting, and pagination
+- **Role-Based UI** — Viewer and Admin roles with a live toggle; Admin unlocks add, edit, delete, and CSV export
+- **Insights Page** — Budget health tracking, 28-day spending heatmap, savings rate trend, and auto-computed financial observations
+- **AI Financial Assistant** — Ask natural language questions about your finances; the assistant reads your actual transaction data and responds with specific, number-backed answers
+- **Accounts Page** — Multi-account view with balance sparklines and asset distribution
+- **Persistent State** — All transactions and settings survive page refresh via localStorage
 
 ## Tech Stack
 
-- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
-- **UI & Styling**: [Tailwind CSS](https://tailwindcss.com/), Custom Glassmorphism patterns
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Animations/Interactive**: React Bits (`LiquidEther`)
-- **AI Integration**: Anthropic Claude & Google Gemini API Integration (Mocked Fallbacks for missing keys)
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Styling | Tailwind CSS, custom glassmorphism |
+| State | Zustand with persist middleware |
+| Charts | Recharts |
+| Icons | Lucide React |
+| Deployment | Vercel |
 
-## Run Locally
-
-First, clone the repository and navigate into the `finsight` directory:
+## Getting Started
 
 ```bash
-cd finsight
 npm install
-```
-
-Start the development server (using Turbopack for faster execution):
-
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-## AI Assistant Configuration
+## AI Assistant Setup
 
-The project features a context-aware AI assistant utilizing `app/api/chat/route.ts`. 
-To use the live AI features, safely drop either an Anthropic Claude API Key OR a Google Gemini API Key into a local `.env.local` file:
+Add one of the following to `.env.local`:
 
 ```env
-# Option 1: Use Anthropic's Claude API
-ANTHROPIC_API_KEY="your-claude-api-key-here"
+# Option 1
+ANTHROPIC_API_KEY=your_api_key_here
 
-# Option 2: Use Google's Gemini API
-GEMINI_API_KEY="your-gemini-api-key-here"
+# Option 2
+GEMINI_API_KEY=your_api_key_here
 ```
 
-*Note: If no live API key is present, the app gracefully falls back to providing simulated, highly-contextual static responses designed directly for the preview buttons, resulting in a perfect grading/demo experience!*
+The assistant supports two AI providers interchangeably. Without a key, it falls back to contextual static responses — all other features remain fully functional.
 
-## Architecture
+## Project Structure
 
-FinSight emphasizes strict modularization and component-driven architecture:
-- `components/landing/LandingPage.tsx`: Handles the interactive WebGL background and hero conversion funnel.
-- `components/ui/GlassCard.tsx`: The universal abstraction layer dictating layout glowing borders and dynamic blur aesthetics across all internal metrics.
-- `hooks/useAIChat.ts`: Custom hook logic managing the streaming conversation between the UI Assistant and server endpoint.
+```
+app/
+├── api/chat/route.ts    # AI streaming endpoint
+└── insights/            # Insights page route
+components/
+├── dashboard/           # Sidebar, Navbar, DashboardLayout, balance card, charts, goals
+├── activity/            # Transaction table, filters, add/edit modal
+├── insights/            # Budget bars, heatmap, AI assistant panel
+├── accounts/            # Account cards, sparklines, asset distribution
+├── landing/             # Landing page components
+├── shared/              # Shared UI like Navbar
+└── ui/                  # Reusable UI components (Badge, GlassCard, etc.)
+store/
+└── useFinanceStore.ts   # Zustand store — transactions, filters, role, budgets
+hooks/
+└── useAIChat.ts         # Streaming AI chat hook
+```
 
-## Deployment
+## Role-Based UI
 
-Simply connect this repository to [Vercel](https://vercel.com/) and deploy using the automated Next.js configuration. All dependencies have been cleaned and resolved locally.
+| Feature | Viewer | Admin |
+|---|---|---|
+| View & filter transactions | ✓ | ✓ |
+| Add transaction | ✗ | ✓ |
+| Edit / Delete transaction | ✗ | ✓ |
+| Export CSV | ✗ | ✓ |
