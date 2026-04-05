@@ -97,7 +97,7 @@ export default function ActivityTransactions() {
 
   return (
     <>
-      <GlassCard className="flex items-center gap-3 flex-shrink-0 p-3 rounded-2xl">
+      <GlassCard className="flex flex-wrap items-center gap-2 md:gap-3 flex-shrink-0 p-3 rounded-2xl">
         <div className="flex items-center gap-2 flex-1 rounded-xl px-3 py-2"
           style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
           <Search size={14} className="text-[#5A5870] flex-shrink-0" />
@@ -115,7 +115,7 @@ export default function ActivityTransactions() {
           )}
         </div>
 
-        <div className="w-px h-5 flex-shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
+        <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'rgba(255,255,255,0.08)' }} />
 
         {/* Category filter */}
         <select value={filters.category} onChange={e => setFilter('category', e.target.value)}
@@ -168,9 +168,9 @@ export default function ActivityTransactions() {
         )}
       </GlassCard>
 
-      <GlassCard className="flex flex-col flex-1 min-h-0 overflow-hidden rounded-2xl">
-        {/* Table header */}
-        <div className="flex-shrink-0 px-5 py-3"
+      <GlassCard className="flex flex-col flex-shrink-0 md:flex-shrink md:flex-1 md:min-h-0 overflow-hidden rounded-2xl">
+        {/* Desktop table header */}
+        <div className="flex-shrink-0 px-5 py-3 hidden md:block"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <table className="w-full table-fixed">
             <colgroup>
@@ -205,8 +205,107 @@ export default function ActivityTransactions() {
           </table>
         </div>
 
-        {/* Scrollable table body */}
-        <div className="flex-1 overflow-y-auto min-h-0 px-5"
+        {/* ── MOBILE CARD LAYOUT ── */}
+        <div className="md:hidden flex flex-col px-4 py-2">
+          {currentTransactions.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full gap-3 py-16">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <SearchX size={22} className="text-[#5A5870]" />
+              </div>
+              <p className="text-white text-sm font-medium">No transactions found</p>
+              <p className="text-[#5A5870] text-xs">Try adjusting your filters</p>
+              <button onClick={clearFilters}
+                className="text-xs px-4 py-2 rounded-full mt-1 hover:bg-white/5 transition-colors"
+                style={{ background: 'rgba(124,92,252,0.15)', color: '#7C5CFC', border: '1px solid rgba(124,92,252,0.2)' }}>
+                Clear all filters
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {currentTransactions.map((tx) => {
+                const isEditing = editingId === tx.id;
+                
+                return (
+                <div key={tx.id} className="flex flex-col p-3 rounded-xl"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  
+                  {isEditing ? (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex gap-2">
+                        <select value={editForm.category || ''} onChange={e => setEditForm({...editForm, category: e.target.value})} className="bg-transparent text-white text-[11px] border border-white/20 rounded px-1.5 py-1.5 outline-none focus:border-[#7C5CFC] flex-1 min-w-0">
+                          {CATEGORIES.map(c => <option className="bg-[#1C1929]" key={c} value={c}>{c}</option>)}
+                        </select>
+                        <select value={editForm.type || ''} onChange={e => setEditForm({...editForm, type: e.target.value})} className="bg-transparent text-white text-[11px] border border-white/20 rounded px-1.5 py-1.5 outline-none focus:border-[#7C5CFC] flex-1 min-w-0">
+                           <option className="bg-[#1C1929]" value="Income">Income</option>
+                           <option className="bg-[#1C1929]" value="Expense">Expense</option>
+                        </select>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <span className="text-white font-medium pl-1 text-sm">$</span>
+                        <input type="number" value={editForm.amount || 0} onChange={e => setEditForm({...editForm, amount: parseFloat(e.target.value) || 0})} className="bg-transparent text-white text-sm font-semibold border border-white/20 rounded px-2 py-1 outline-none focus:border-[#7C5CFC] flex-1 min-w-0 w-16" />
+                        <select value={editForm.status || ''} onChange={e => setEditForm({...editForm, status: e.target.value})} className="bg-transparent text-white text-[11px] border border-white/20 rounded px-1.5 py-1.5 outline-none focus:border-[#7C5CFC] flex-1 min-w-0">
+                          <option className="bg-[#1C1929]" value="Completed">Completed</option>
+                          <option className="bg-[#1C1929]" value="Pending">Pending</option>
+                          <option className="bg-[#1C1929]" value="Failed">Failed</option>
+                        </select>
+                      </div>
+                      <div className="flex items-center justify-end gap-2 mt-1">
+                        <button onClick={saveEdit} className="flex-1 py-1.5 rounded-lg flex items-center justify-center text-[#4FC9A4] transition-all border border-[#4FC9A4]/30 bg-[#4FC9A4]/10 font-medium text-xs">Save</button>
+                        <button onClick={cancelEdit} className="w-10 py-1.5 rounded-lg flex items-center justify-center text-[#F87171] transition-all border border-[#F87171]/30 bg-[#F87171]/10"><XIcon size={14} /></button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold overflow-hidden"
+                          style={{ background: tx.iconBg, color: tx.iconColor }}>
+                          {tx.icon.startsWith('/') ? (
+                            <Image src={tx.icon} alt={tx.name} width={20} height={20} className={`object-contain ${['Netflix', 'Amazon', 'Starbucks'].includes(tx.name) ? 'scale-[1.35]' : ''}`} />
+                          ) : tx.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white text-[13px] font-medium truncate">{tx.name}</p>
+                          <div className="flex items-center flex-wrap gap-1.5 mt-0.5">
+                            <span className="px-1.5 py-0.5 rounded-md text-[9px] font-medium whitespace-nowrap"
+                              style={{ background: tx.categoryBg, color: tx.categoryColor }}>{tx.category}</span>
+                            <span className="text-[#5A5870] text-[10px] whitespace-nowrap">{tx.date}</span>
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end flex-shrink-0 ml-1">
+                          <p className={`text-[13px] font-semibold ${tx.type === 'Income' ? 'text-[#4FC9A4]' : 'text-white'}`}>
+                            {tx.type === 'Income' ? '+' : '-'}${tx.amount.toFixed(2)}
+                          </p>
+                          <div className="flex items-center gap-1 text-[9px] mt-1 font-medium"
+                            style={{ color: tx.status === 'Completed' ? '#4FC9A4' : tx.status === 'Pending' ? '#F5A623' : '#F87171' }}>
+                            <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'currentColor' }} />
+                            {tx.status}
+                          </div>
+                        </div>
+                      </div>
+
+                      {role === 'Admin' && (
+                        <div className="flex items-center justify-end gap-1 mt-3 pt-3 border-t border-white/5">
+                          <button onClick={() => startEdit(tx)} className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8B899A] hover:text-white hover:bg-white/10 transition-all bg-white/5">
+                            <Pencil size={13} />
+                          </button>
+                          <button onClick={() => deleteTransaction(tx.id)}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8B899A] hover:text-[#F87171] hover:bg-[#F87171]/10 transition-all bg-white/5">
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* ── DESKTOP TABLE BODY ── */}
+        <div className="hidden md:block flex-1 overflow-y-auto min-h-0 px-5"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {currentTransactions.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-3 py-16">
@@ -387,9 +486,9 @@ export default function ActivityTransactions() {
         </div>
 
         {/* Pagination */}
-        <div className="flex items-center justify-between px-5 py-3 flex-shrink-0"
+        <div className="flex flex-col md:flex-row items-center justify-between px-4 md:px-5 py-3 gap-3 md:gap-0 flex-shrink-0"
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p className="text-[#5A5870] text-xs">
+          <p className="text-[#5A5870] text-[11px] md:text-xs">
             Showing <span className="text-white">{startIdx + 1}-{endIdx}</span> of <span className="text-white">{filteredTransactions.length}</span> transactions
           </p>
 

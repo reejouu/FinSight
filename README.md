@@ -12,6 +12,7 @@ FinSight is a modern personal finance dashboard built with Next.js 15, Tailwind 
 - **Insights Page** — Budget health tracking, 28-day spending heatmap, savings rate trend, and auto-computed financial observations
 - **AI Financial Assistant** — Ask natural language questions about your finances; the assistant reads your actual transaction data and responds with specific, number-backed answers
 - **Accounts Page** — Multi-account view with balance sparklines and asset distribution
+- **Mobile Responsiveness** — Fully optimized for small viewports with stackable components, scalable charts, and dynamic overlays like the retractable FinSight AI chat
 - **Persistent State** — All transactions and settings survive page refresh via localStorage
 
 ## Tech Stack

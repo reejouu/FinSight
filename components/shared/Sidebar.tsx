@@ -7,7 +7,7 @@ export default function Sidebar({ activeTab, setActiveTab }: { activeTab?: strin
   const tabs = ['Home', 'Overview', 'Activity', 'Insights', 'Accounts'];
   return (
     <aside
-      className="flex flex-col items-center flex-shrink-0 py-5 pl-3 pr-2"
+      className="hidden md:flex flex-col items-center flex-shrink-0 py-5 pl-3 pr-2"
       style={{ width: '76px' }}
     >
       {/* Glass pill — slightly inset from left edge */}

@@ -54,15 +54,15 @@ export default function ActivityHeader({
   };
 
   return (
-    <div className="flex items-start justify-between flex-shrink-0" style={{ height: '52px' }}>
-      <div>
-        <h1 className="text-white text-[22px] font-bold leading-tight">Transactions</h1>
-        <p className="text-[#8B899A] text-[13px] mt-1">
+    <div className="flex flex-col md:flex-row md:items-start justify-between flex-shrink-0 gap-3" style={{ minHeight: '52px' }}>
+      <div className="flex-shrink-0">
+        <h1 className="text-white text-xl md:text-[22px] font-bold leading-tight">Transactions</h1>
+        <p className="text-[#8B899A] text-[12px] md:text-[13px] mt-1">
           Track and manage all your financial activity
         </p>
       </div>
 
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
         <div className="relative" ref={dropdownRef}>
           <button 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -97,7 +97,7 @@ export default function ActivityHeader({
           )}
         </div>
 
-        <div className="w-px h-5 bg-white/10 mx-1"></div>
+        <div className="w-px h-5 bg-white/10 mx-1 hidden md:block"></div>
 
         
 

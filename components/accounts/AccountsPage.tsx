@@ -13,16 +13,18 @@ export default function AccountsPage() {
   const totalNetWorth = mockAccounts.reduce((acc, curr) => acc + curr.balance, 0);
 
   return (
-    <div className="flex flex-1 overflow-hidden min-h-0 px-6 py-5 gap-5">
+    <div className="flex flex-col xl:flex-row flex-1 overflow-y-auto xl:overflow-hidden min-h-0 px-4 md:px-6 py-4 md:py-5 gap-4 md:gap-5"
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       
       {/* Main Content Column */}
-      <div className="flex-1 overflow-hidden flex flex-col gap-4 pr-2">
+      <div className="flex-1 overflow-visible xl:overflow-hidden flex flex-col gap-4 md:pr-2 flex-shrink-0 xl:flex-shrink"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         
         {/* Page header row */}
-        <div className="flex items-start justify-between flex-shrink-0" style={{ height: '48px' }}>
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 md:gap-0 flex-shrink-0 md:h-[48px]">
           <div>
-            <h1 className="text-white text-[22px] font-bold leading-tight">Accounts & Cards</h1>
-            <p className="text-[#8B899A] text-[13px] mt-1">
+            <h1 className="text-white text-xl md:text-[22px] font-bold leading-tight">Accounts & Cards</h1>
+            <p className="text-[#8B899A] text-xs md:text-[13px] mt-1">
               Manage your connected bank accounts and credit cards
             </p>
           </div>
@@ -36,28 +38,28 @@ export default function AccountsPage() {
         </div>
 
         {/* Row 1 — Account cards */}
-        <div className="grid grid-cols-2 gap-4 flex-shrink-0 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-shrink-0 items-start">
           {mockAccounts.slice(0, 2).map((acc) => (
              <AccountCard key={acc.id} acc={acc} />
           ))}
         </div>
         
         {/* Row 2 - Recent Activity & Quick Actions */}
-        <div className="flex flex-1 gap-4 min-h-0 overflow-hidden pb-4">
+        <div className="flex flex-col xl:flex-row flex-shrink-0 xl:flex-shrink xl:flex-1 gap-4 xl:min-h-0 xl:overflow-hidden pb-2 mb-2 xl:pb-4 xl:mb-0">
           {/* Section 3 - Recent Activity */}
-          <div className="flex flex-col flex-1 min-w-0 h-full">
+          <div className="flex flex-col flex-1 min-w-0 h-[400px] xl:h-full flex-shrink-0 xl:flex-shrink">
              <RecentAccountActivity />
           </div>
 
           {/* QuickActions as Section 2 */}
-          <div className="w-[300px] flex-shrink-0 h-full">
+          <div className="w-full xl:w-[300px] flex-shrink-0 xl:h-full">
             <QuickActions />
           </div>
         </div>
       </div>
 
-      {/* Right Column (Fixed Width) */}
-      <div className="flex flex-col gap-4 flex-shrink-0 min-h-0 overflow-hidden pb-4" style={{ width: '310px' }}>
+      {/* Right Column (Fixed Width on Desktop) */}
+      <div className="flex flex-col gap-4 flex-shrink-0 w-full xl:w-[310px] xl:min-h-0 overflow-visible xl:overflow-hidden pb-4">
         
         {/* Unified Net Worth & Asset Distribution */}
         <GlassCard className="p-4 rounded-2xl flex flex-col flex-shrink-0">

@@ -20,14 +20,14 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export default function AllActivity() {
   return (
-    <GlassCard className="flex flex-col h-full p-5 rounded-2xl min-w-0 flex-1 relative">
+    <GlassCard className="flex flex-col p-5 rounded-2xl min-w-0 flex-1 relative min-h-[280px] md:min-h-0 md:h-full">
       <div className="flex justify-between items-center mb-4 flex-shrink-0 z-10 relative">
         <h3 className="text-white text-[15px] font-medium tracking-wide">All Activity</h3>
         <button className="text-[#5A5870] hover:text-white transition-colors"><MoreHorizontal size={18} /></button>
       </div>
 
       {/* donut fills remaining space, centered */}
-      <div className="flex-1 flex items-center justify-center min-h-0 relative">
+      <div className="h-[200px] md:flex-1 md:h-auto flex items-center justify-center min-h-0 relative">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Tooltip 
@@ -41,8 +41,8 @@ export default function AllActivity() {
               data={activityData} 
               cx="50%" 
               cy="50%" 
-              innerRadius={60} 
-              outerRadius={80} 
+              innerRadius="55%" 
+              outerRadius="75%" 
               paddingAngle={4} 
               dataKey="value" 
               stroke="none"

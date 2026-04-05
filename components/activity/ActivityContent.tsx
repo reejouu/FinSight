@@ -61,7 +61,7 @@ export default function ActivityContent() {
   ];
 
   return (
-    <div className="flex flex-col flex-1 min-w-0 min-h-0 px-6 py-5 gap-4 overflow-hidden">
+    <div className="flex flex-col flex-1 min-w-0 min-h-0 px-4 md:px-6 py-4 md:py-5 gap-4 overflow-y-auto md:overflow-hidden">
       <ActivityHeader 
         activeToggle={activeToggle}
         setActiveToggle={setActiveToggle}

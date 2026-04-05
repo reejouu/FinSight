@@ -57,11 +57,11 @@ export default function TransactionChart() {
       </div>
 
       {/* Chart */}
-      <div className="flex-1 min-h-0 w-full relative z-0">
+      <div className="h-[200px] md:flex-1 md:h-auto min-h-0 w-full relative z-0">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+            margin={{ top: 5, right: 10, left: 5, bottom: 0 }}
           >
             <defs>
               <linearGradient id="gSpend" x1="0" y1="0" x2="0" y2="1">
@@ -76,19 +76,21 @@ export default function TransactionChart() {
             <CartesianGrid strokeDasharray="5 5" stroke="rgba(255,255,255,0.06)" vertical={false} />
             <XAxis 
               dataKey="name" 
-              tick={{ fill: '#8B899A', fontSize: 13, fontWeight: 500 }}
+              tick={{ fill: '#8B899A', fontSize: 11, fontWeight: 500 }}
               axisLine={false} 
               tickLine={false} 
-              dy={10} 
-              padding={{ left: 10, right: 10 }}
+              dy={5} 
+              interval="preserveStartEnd"
+              padding={{ left: 5, right: 5 }}
             />
             <YAxis 
-              tick={{ fill: '#8B899A', fontSize: 13, fontWeight: 500 }} 
+              tick={{ fill: '#8B899A', fontSize: 11, fontWeight: 500 }} 
               axisLine={false} 
               tickLine={false}
               tickFormatter={v => v === 0 ? '0' : `${v/1000}k`}
               domain={[0, 'dataMax + 5000']}
-              dx={-5}
+              dx={-2}
+              width={45}
             />
             <Tooltip 
               content={<CustomTooltip />} 
@@ -98,17 +100,17 @@ export default function TransactionChart() {
               type="monotone" 
               dataKey="spending"
               stroke="#7C5CFC" 
-              strokeWidth={3} 
+              strokeWidth={2} 
               fill="url(#gSpend)" 
-              activeDot={{ r: 5, strokeWidth: 0, fill: '#7C5CFC' }}
+              activeDot={{ r: 4, strokeWidth: 0, fill: '#7C5CFC' }}
             />
             <Area 
               type="monotone" 
               dataKey="earnings"
               stroke="#4FC9A4" 
-              strokeWidth={3} 
+              strokeWidth={2} 
               fill="url(#gEarn)" 
-              activeDot={{ r: 5, strokeWidth: 0, fill: '#4FC9A4' }}
+              activeDot={{ r: 4, strokeWidth: 0, fill: '#4FC9A4' }}
             />
           </AreaChart>
         </ResponsiveContainer>

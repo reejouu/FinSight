@@ -3,7 +3,7 @@ import { glassCard } from '@/lib/styles';
 
 export default function TotalBalanceCard() {
   return (
-    <div className="flex flex-col rounded-2xl p-5 flex-shrink-0 overflow-hidden" style={{ ...glassCard, width: '380px' }}>
+    <div className="flex flex-col rounded-2xl p-5 flex-shrink-0 overflow-hidden w-full md:w-[380px]" style={{ ...glassCard }}>
       <h3 className="text-white text-[15px] font-medium tracking-wide mb-4">Total Balance</h3>
       <div className="flex items-end gap-2 mb-4">
         <span className="text-white text-3xl font-bold tracking-tight leading-none">$54,689</span>
@@ -30,7 +30,6 @@ export default function TotalBalanceCard() {
             <p className="text-white text-sm font-semibold">$14,756.00</p>
           </div>
         </div>
-        {/* 5-segment progress bar */}
         <div className="flex gap-1 mb-1.5">
           {[true, false, false, false, false].map((filled, i) => (
             <div key={i} className="h-1 flex-1 rounded-full"

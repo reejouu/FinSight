@@ -65,7 +65,7 @@ export default function BudgetHealthStrip({ range }: { range: string }) {
   const top3 = categoriesData.sort((a, b) => b.spent - a.spent).slice(0, 3);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       {top3.map((cat, i) => {
         const Icon = ICONS[cat.name] || ShoppingBag;
         return (

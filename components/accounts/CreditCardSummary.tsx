@@ -69,16 +69,16 @@ export default function CreditCardSummary() {
                <div className="flex flex-col gap-1.5">
                   <div className="flex items-center justify-between relative">
                      <div className="relative z-10 text-white flex items-center justify-start gap-1 sm:gap-2 overflow-hidden w-full">
-                       <span className="text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[3px]">
+                       <span className="text-[14px] sm:text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[1px] sm:tracking-[3px]">
                          {showNumber ? cardNumber.split('  ')[0] : "****"}
                        </span>
-                       <span className="text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[3px]">
+                       <span className="text-[14px] sm:text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[1px] sm:tracking-[3px]">
                          {showNumber ? cardNumber.split('  ')[1] : "****"}
                        </span>
-                       <span className="text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[3px]">
+                       <span className="text-[14px] sm:text-[17px] leading-none transform translate-y-0.5 drop-shadow-sm font-mono tracking-[1px] sm:tracking-[3px]">
                          {showNumber ? cardNumber.split('  ')[2] : "****"}
                        </span>
-                       <span className="font-mono font-medium text-[16px] tracking-widest ml-0.5 drop-shadow-sm">{primaryCard.number}</span>
+                       <span className="font-mono font-medium text-[13px] sm:text-[16px] tracking-widest ml-0.5 drop-shadow-sm">{primaryCard.number}</span>
                      </div>
                      <button onClick={() => setShowNumber(!showNumber)} className="text-white/60 hover:text-white hover:bg-white/10 p-1.5 rounded-full transition-all shrink-0 z-20 absolute right-0 top-0">
                         {showNumber ? <EyeOff size={14} /> : <Eye size={14} />}

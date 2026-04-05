@@ -25,18 +25,17 @@ export default function FinancialGoals() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full p-5 rounded-2xl overflow-hidden flex-shrink-0 relative" style={{ ...glassCard, width: '480px' }}>
+    <div className="flex flex-col p-5 rounded-2xl overflow-hidden relative md:h-full md:flex-shrink-0 md:w-[480px]" style={{ ...glassCard }}>
       {/* header */}
       <div className="flex justify-between items-center mb-5 flex-shrink-0 z-10 relative">
         <h3 className="text-white text-[15px] font-medium tracking-wide">Financial Goals</h3>
         <button className="text-[#5A5870] hover:text-white transition-colors"><ChevronRight size={18} /></button>
       </div>
       {/* goal rows */}
-      <div ref={containerRef} className="flex flex-col flex-1 min-h-0 overflow-y-auto hide-scroll gap-0 scroll-smooth"
+      <div ref={containerRef} className="flex flex-col md:flex-1 md:min-h-0 md:overflow-y-auto hide-scroll gap-0 scroll-smooth"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {goals.map((goal, idx) => (
-          <div key={idx} className="flex items-center gap-3 border-b border-white/5 last:border-0 flex-shrink-0"
-            style={{ height: `${100 / itemCount}%` }}>
+          <div key={idx} className="flex items-center gap-3 border-b border-white/5 last:border-0 flex-shrink-0 py-3">
             <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
               <svg className="w-10 h-10 transform -rotate-90 absolute inset-0">
                 <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" fill="none" />
@@ -45,14 +44,14 @@ export default function FinancialGoals() {
               <span className="text-[9px] font-bold text-white relative z-10">{goal.percent}%</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="text-[13px] font-bold text-white truncate">{goal.name}</h4>
+              <h4 className="text-[13px] font-bold text-white">{goal.name}</h4>
               <p className="text-[11px] text-[#8B899A]">{goal.deadline}</p>
             </div>
-            <div className="text-right flex-shrink-0">
+            <div className="text-right flex-shrink-0 w-16">
               <p className="text-[10px] text-white/50 mb-0.5">Saved Up</p>
               <p className="text-[13px] font-bold text-white leading-none">{goal.saved}</p>
             </div>
-            <div className="text-right ml-2 w-14 flex-shrink-0">
+            <div className="text-right flex-shrink-0 w-16">
               <p className="text-[10px] text-white/50 mb-0.5">Goal</p>
               <p className="text-[13px] font-bold text-white leading-none">{goal.goal}</p>
             </div>
@@ -60,7 +59,7 @@ export default function FinancialGoals() {
         ))}
       </div>
       {/* pagination */}
-      <div className="flex items-center justify-between pt-2 mt-2 border-t border-white/5 flex-shrink-0">
+      <div className="flex items-center justify-between pt-3 mt-2 border-t border-white/5 flex-shrink-0">
         <p className="text-[11px] text-[#8B899A]">Showing 1 to 4 of 8 entries</p>
         <div className="flex items-center gap-1">
           <button className="w-6 h-6 flex items-center justify-center text-[#8B899A] hover:text-white"><ChevronLeft size={14} /></button>
